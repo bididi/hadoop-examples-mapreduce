@@ -25,9 +25,7 @@ public class OTBD {
         Job job = Job.getInstance(conf, "otbd");
         job.setJarByClass(com.opstty.job.OTBD.class);
         job.setMapperClass(OTBDMapper.class);
-        //job.setCombinerClass(OTDBReducer.class);
         job.setReducerClass(OTBDReducer.class);
-
         job.setMapOutputKeyClass(IntWritable.class);
         job.setMapOutputValueClass(WritableSub.class);
         job.setOutputKeyClass(IntWritable.class);

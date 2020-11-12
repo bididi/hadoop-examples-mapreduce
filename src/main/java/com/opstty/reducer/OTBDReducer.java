@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class OTBDReducer extends Reducer<IntWritable, WritableSub, IntWritable, NullWritable>
 {
-    IntWritable oldest = new IntWritable();
+    public IntWritable oldest = new IntWritable();
     public void reduce(IntWritable oneForAll, Iterable<WritableSub> values, Context context) throws IOException, InterruptedException
     {
         int minYear = 2020;
