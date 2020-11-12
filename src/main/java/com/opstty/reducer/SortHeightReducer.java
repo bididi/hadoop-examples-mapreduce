@@ -5,7 +5,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class HighestReducer extends Reducer<Text, FloatWritable, Text, FloatWritable> {
+public class SortHeightReducer extends Reducer<Text, FloatWritable, Text, FloatWritable> {
     private FloatWritable result = new FloatWritable();
 
     public void reduce(Text key, Iterable<FloatWritable> values, Context context)

@@ -1,13 +1,11 @@
 package com.opstty.job;
 
-import com.opstty.mapper.DtMapper;
+
 import com.opstty.mapper.HighestMapper;
+import com.opstty.mapper.SortHeightMapper;
 import com.opstty.mapper.SpeciesMapper;
 import com.opstty.mapper.TBSMapper;
-import com.opstty.reducer.DtReducer;
-import com.opstty.reducer.HighestReducer;
-import com.opstty.reducer.SpeciesReducer;
-import com.opstty.reducer.TBSReducer;
+import com.opstty.reducer.*;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
@@ -20,19 +18,19 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
 
-public class Highest {
+public class SortHeight {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         if (otherArgs.length < 2) {
-            System.err.println("Usage: highest <in> [<in>...] <out>");
+            System.err.println("Usage: sort <in> [<in>...] <out>");
             System.exit(2);
         }
-        Job job = Job.getInstance(conf, "highset");
-        job.setJarByClass(com.opstty.job.Highest.class);
-        job.setMapperClass(HighestMapper.class);
-        job.setCombinerClass(HighestReducer.class);
-        job.setReducerClass(HighestReducer.class);
+        Job job = Job.getInstance(conf, "sort");
+        job.setJarByClass(com.opstty.job.SortHeight.class);
+        job.setMapperClass(SortHeightMapper.class);
+        job.setCombinerClass(SortHeightReducer.class);
+        job.setReducerClass(SortHeightReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(FloatWritable.class);
         for (int i = 0; i < otherArgs.length - 1; ++i) {

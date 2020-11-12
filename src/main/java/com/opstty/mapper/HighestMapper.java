@@ -1,21 +1,27 @@
 package com.opstty.mapper;
 
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class HighestMapper extends Mapper<Object, Text, Text, IntWritable> {
-
+public class HighestMapper extends Mapper<Object, Text, Text, FloatWritable> {
+    private final static FloatWritable height = new FloatWritable();
+    private Text espece = new Text();
     public void map(Object key, Text value, Context context)
             throws IOException, InterruptedException {
 
-        if(!value.toString().contains("ESPECE")){
-            Text dt = new Text(value.toString().split(";")[4]);
-            Text taille = new Text(value.toString().split(";")[7]);
-            IntWritable one = new IntWritable((int) Long.parseLong(String.valueOf(taille)));
-            context.write(dt,one);
-        }
+
+
+        String[] ligne = value.toString().split(";");
+        if (!ligne[6].equals("HAUTEUR")&&!ligne[6].equals(""))
+            height.set( Float.parseFloat(ligne[6]));
+            espece.set(ligne[2]);
+
+
+        context.write(espece, height);
     }
 }

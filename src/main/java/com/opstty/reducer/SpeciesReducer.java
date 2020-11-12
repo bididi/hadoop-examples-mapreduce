@@ -12,8 +12,8 @@ public class SpeciesReducer extends Reducer<Text, IntWritable, Text, NullWritabl
             throws IOException, InterruptedException {
 
 
-            context.write(specieskey, NullWritable.get());
-
-        }
+        context.write(specieskey, NullWritable.get());
 
     }
+
+}

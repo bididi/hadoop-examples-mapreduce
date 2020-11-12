@@ -1,9 +1,6 @@
 package com.opstty;
 
-import com.opstty.job.Dt;
-import com.opstty.job.Species;
-import com.opstty.job.TreeBySpecies;
-import com.opstty.job.WordCount;
+import com.opstty.job.*;
 import org.apache.hadoop.util.ProgramDriver;
 
 import java.util.function.DoubleToIntFunction;
@@ -14,7 +11,9 @@ public class AppDriver {
         ProgramDriver programDriver = new ProgramDriver();
 
         try {
-            programDriver.addClass("highest", Species.class,
+            programDriver.addClass("sort", SortHeight.class,
+                    "A map/reduce program that return the height of each tree sorted from the smallest to the biggest.");
+            programDriver.addClass("highest", Highest.class,
                     "A map/reduce program that return the high of the highest tree of each species.");
             programDriver.addClass("species", Species.class,
                     "A map/reduce program that list the species of trees.");
