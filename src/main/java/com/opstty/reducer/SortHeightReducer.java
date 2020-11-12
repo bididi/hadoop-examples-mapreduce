@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public class SortHeightReducer extends Reducer<FloatWritable, NullWritable, FloatWritable, NullWritable>
 {
-    public void reduce(FloatWritable heightKey, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException
+    public void reduce(FloatWritable Key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException
     {
-        context.write(heightKey, NullWritable.get());
+        context.write(Key, NullWritable.get());
     }
 }
