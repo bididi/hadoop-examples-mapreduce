@@ -12,7 +12,7 @@ public class OTBDReducer extends Reducer<IntWritable, WritableSub, IntWritable, 
     private int district = 0;
 
     public IntWritable oldest = new IntWritable();
-    public void reduce(IntWritable oneForAll, Iterable<WritableSub> values, Context context) throws IOException, InterruptedException
+    public void reduce(IntWritable key, Iterable<WritableSub> values, Context context) throws IOException, InterruptedException
     {
 
         for (WritableSub val : values)

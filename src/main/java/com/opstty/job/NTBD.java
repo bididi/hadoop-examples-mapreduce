@@ -3,12 +3,13 @@ package com.opstty.job;
 
 import com.opstty.WritableSub;
 import com.opstty.mapper.NTBDMapper;
-import com.opstty.mapper.OTBDMapper;
+import com.opstty.mapper.NTBDMapper2;
 import com.opstty.reducer.*;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -26,17 +27,30 @@ public class NTBD {
         Job job = Job.getInstance(conf, "ntbd");
         job.setJarByClass(com.opstty.job.NTBD.class);
         job.setMapperClass(NTBDMapper.class);
-        job.setReducerClass(NTBDReducer.class);
-        job.setMapOutputKeyClass(IntWritable.class);
-        job.setMapOutputValueClass(WritableSub.class);
-        job.setOutputKeyClass(IntWritable.class);
-        job.setOutputValueClass(NullWritable.class);
+        job.setReducerClass(TBSReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
 
-        for (int i = 0; i < otherArgs.length - 1; ++i) {
+        for (int i = 0; i < otherArgs.length - 1; ++i)
+        {
             FileInputFormat.addInputPath(job, new Path(otherArgs[i]));
         }
-        FileOutputFormat.setOutputPath(job,
-                new Path(otherArgs[otherArgs.length - 1]));
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
+        FileOutputFormat.setOutputPath(job, new Path(otherArgs[otherArgs.length - 1], "Job"));
+        job.waitForCompletion(true);
+
+
+        Job job1 = Job.getInstance(conf, "MAX");
+        job1.setJarByClass(com.opstty.job.NTBD.class);
+        job1.setMapperClass(NTBDMapper2.class);
+        job1.setReducerClass(NTBDReducer2.class);
+        job1.setMapOutputKeyClass(NullWritable.class);
+        job1.setMapOutputValueClass(WritableSub.class);
+        job1.setOutputKeyClass(IntWritable.class);
+        job1.setOutputValueClass(IntWritable.class);
+
+
+        FileInputFormat.addInputPath(job1, new Path(otherArgs[otherArgs.length - 1], "Job"));
+        FileOutputFormat.setOutputPath(job1, new Path(otherArgs[otherArgs.length - 1], "Job1"));
+        System.exit(job1.waitForCompletion(true) ? 0 : 1);
     }
 }
