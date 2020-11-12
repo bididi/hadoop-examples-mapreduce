@@ -1,32 +1,37 @@
 package com.opstty.job;
 
-import com.opstty.mapper.DtMapper;
-import com.opstty.reducer.DtReducer;
+
+import com.opstty.WritableSub;
+import com.opstty.mapper.NTBDMapper;
+import com.opstty.mapper.OTBDMapper;
+import com.opstty.reducer.*;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
 
-public class Dt {
+public class NTBD {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         if (otherArgs.length < 2) {
-            System.err.println("Usage: dt <in> [<in>...] <out>");
+            System.err.println("Usage: ntbd <in> [<in>...] <out>");
             System.exit(2);
         }
-        Job job = Job.getInstance(conf, "dt");
-        job.setJarByClass(com.opstty.job.Dt.class);
-        job.setMapperClass(DtMapper.class);
-        job.setCombinerClass(DtReducer.class);
-        job.setReducerClass(DtReducer.class);
-        job.setOutputKeyClass(Text.class);
+        Job job = Job.getInstance(conf, "ntbd");
+        job.setJarByClass(com.opstty.job.NTBD.class);
+        job.setMapperClass(NTBDMapper.class);
+        job.setReducerClass(NTBDReducer.class);
+        job.setMapOutputKeyClass(IntWritable.class);
+        job.setMapOutputValueClass(WritableSub.class);
+        job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(NullWritable.class);
+
         for (int i = 0; i < otherArgs.length - 1; ++i) {
             FileInputFormat.addInputPath(job, new Path(otherArgs[i]));
         }
@@ -35,6 +40,3 @@ public class Dt {
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
-
-
-

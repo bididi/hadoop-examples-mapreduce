@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 
 
 public class DtMapper extends Mapper<Object, Text, Text, NullWritable> {
+
     public void map(Object key, Text value, Context context)
             throws IOException, InterruptedException {
 
@@ -19,3 +20,4 @@ public class DtMapper extends Mapper<Object, Text, Text, NullWritable> {
         }
     }
 }
+

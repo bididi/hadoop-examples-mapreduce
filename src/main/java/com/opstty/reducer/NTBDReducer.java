@@ -6,22 +6,19 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class OTBDReducer extends Reducer<IntWritable, WritableSub, IntWritable, NullWritable>
+public class NTBDReducer extends Reducer<IntWritable, WritableSub, IntWritable, NullWritable>
 {
-    private int min = 2020;
-    private int district = 0;
-
     public IntWritable oldest = new IntWritable();
     public void reduce(IntWritable oneForAll, Iterable<WritableSub> values, Context context) throws IOException, InterruptedException
     {
-
+        int minYear = 2020;
+        int district = 0;
         for (WritableSub val : values)
         {
-            if (min> val.getV2().get())
+            if (minYear > val.getV2().get())
             {
+                minYear = val.getV2().get();
                 district = val.getV1().get();
-
-                min = val.getV2().get();
             }
         }
         oldest.set(district);

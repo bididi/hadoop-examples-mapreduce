@@ -17,9 +17,10 @@ public class HighestMapper extends Mapper<Object, Text, Text, FloatWritable> {
 
 
         String[] ligne = value.toString().split(";");
-        if (!ligne[6].equals("HAUTEUR")&&!ligne[6].equals(""))
+        if (!ligne[6].equals("HAUTEUR")&&!ligne[6].equals("")&&!ligne[3].equals("ESPECE")) {
             height.set( Float.parseFloat(ligne[6]));
             espece.set(ligne[3]);
+        }
 
 
         context.write(espece, height);
