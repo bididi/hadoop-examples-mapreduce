@@ -11,6 +11,10 @@ public class AppDriver {
         ProgramDriver programDriver = new ProgramDriver();
 
         try {
+            programDriver.addClass("ntbd", OTBD.class,
+                    "A map/reduce program that return the number of trees by districts.");
+            programDriver.addClass("otbd", OTBD.class,
+                    "A map/reduce program that return the district with the oldest tree.");
             programDriver.addClass("sort", SortHeight.class,
                     "A map/reduce program that return the height of each tree sorted from the smallest to the biggest.");
             programDriver.addClass("highest", Highest.class,
