@@ -15,7 +15,7 @@ public class TBSMapper extends Mapper<Object, Text, Text, IntWritable> {
             throws IOException, InterruptedException {
 
         if(!value.toString().contains("ESPECE")){
-            Text dt = new Text(value.toString().split(";")[4]);
+            Text dt = new Text(value.toString().split(";")[3]);
             context.write(dt,one);
         }
     }

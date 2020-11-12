@@ -15,7 +15,7 @@ public class SpeciesMapper extends Mapper<Object, Text, Text, NullWritable> {
             throws IOException, InterruptedException {
 
         if(!value.toString().contains("ESPECE")){
-            Text espece = new Text(value.toString().split(";")[4]);
+            Text espece = new Text(value.toString().split(";")[3]);
             context.write(espece,NullWritable.get());
         }
     }
